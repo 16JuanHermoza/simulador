@@ -8,6 +8,10 @@ html, body {
   display: flex;
   flex-direction: column;
 }
+h1, p{
+ text-align: center;
+ flex-direction: column;
+}
 
 header {
   background-color: #2c8d57;
