@@ -15,11 +15,10 @@ const questions = {
       ]
     },
     {
-      question: "¿Qué tipo de coche usas?",
+      question: "¿Qué tipo de movilizacion usas?",
       options: [
         { text: "Gasolina", impact: 10 },
         { text: "Eléctrico", impact: 3 },
-        { text: "No uso coche", impact: 0 }
       ]
     }
   ],
@@ -70,9 +69,59 @@ function showQuestion() {
     const button = document.createElement("button");
     button.innerText = option.text;
     button.classList.add("choice-btn");
-    button.onclick = () => selectOption(option.impact);
+    button.onclick = () => {
+      if (option.text === "Bicicleta o a pie") {
+        showSubQuestion();
+      } else {
+        selectOption(option.impact);
+        nextQuestion(); // Avanza a la siguiente pregunta principal
+      }
+    };
     optionsDiv.appendChild(button);
   });
+}
+
+// Muestra una subpregunta para "Bicicleta o a pie"
+function showSubQuestion() {
+  const subQuestion = {
+    question: "¿Qué tipo de bicicleta usas?",
+    options: [
+      { text: "Gasolina", impact: 10 },
+      { text: "Eléctrico", impact: 3 },
+      { text: "A pie", impact: 1 }
+    ]
+  };
+
+  document.getElementById("question").innerText = subQuestion.question;
+  const optionsDiv = document.getElementById("options");
+  optionsDiv.innerHTML = "";
+
+  subQuestion.options.forEach((option) => {
+    const button = document.createElement("button");
+    button.innerText = option.text;
+    button.classList.add("choice-btn");
+    button.onclick = () => {
+      selectOption(option.impact);
+      currentQuestionIndex++; // Incrementa el índice para saltar la pregunta de movilización
+      nextQuestion(); // Avanza a la siguiente pregunta principal
+    };
+    optionsDiv.appendChild(button);
+  });
+}
+
+// Pasa a la siguiente pregunta o muestra los resultados
+function nextQuestion() {
+  const categoryQuestions = questions[currentCategory];
+
+  if (currentQuestionIndex < categoryQuestions.length) {
+    document.getElementById("next-btn").classList.add("hidden");
+    showQuestion();
+  } else {
+    categoryScores[currentCategory] = impactScore;
+    document.getElementById("simulation").classList.add("hidden");
+    document.getElementById("results").classList.remove("hidden");
+    renderResults();
+  }
 }
 
 // Registra la opción seleccionada
@@ -148,4 +197,28 @@ function restartSimulation() {
 
   // Reinicia los puntajes
   categoryScores = { transporte: 0, alimentacion: 0, residuos: 0 };
+}
+
+// Función para obtener datos comunitarios y comparar
+function fetchCommunityData() {
+  // Simulación de datos comunitarios (deberías reemplazar esto con una llamada a una API real)
+  const communityData = { averageImpact: 35 }; // Valor simulado
+  compareWithCommunity(communityData);
+}
+
+// Función para comparar los puntajes del usuario con los comunitarios
+function compareWithCommunity(communityData) {
+  const userTotalImpact = categoryScores.transporte + categoryScores.alimentacion + categoryScores.residuos;
+  document.getElementById("user-impact").innerText = `Tu impacto total: ${userTotalImpact} puntos`;
+  document.getElementById("average-community-impact").innerText = `Promedio comunitario: ${communityData.averageImpact} puntos`;
+
+  document.getElementById("community-comparison").classList.remove("hidden");
+}
+
+// Llamar a fetchCommunityData en renderResults
+function renderResults() {
+  const totalImpact = categoryScores.transporte + categoryScores.alimentacion + categoryScores.residuos;
+  document.getElementById("recommendations").innerText = `Tu impacto ambiental total es de ${totalImpact} puntos.`;
+  renderChart();
+  fetchCommunityData(); // Obtener y comparar datos comunitarios
 }

@@ -54,3 +54,43 @@ footer {
 .choice-btn:hover, .restart:hover, #next-btn:hover{
   background-color: #45a049;
 }
+
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  line-height: 1.6;
+}
+h1, h2 {
+  color: #1ec1c4;
+}
+.category {
+  margin: 20px 0;
+  padding: 10px;
+  border: 1px solid #2c7a7b;
+  border-radius: 5px;
+  background-color: #e6fffa;
+}
+.impact-level {
+  font-weight: bold;
+}
+.recommendations {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #fefcbf;
+  border: 1px solid #ecc94b;
+  border-radius: 5px;
+}
+
+.category-image {
+  width: 200px;
+  height: 200px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+.category-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}

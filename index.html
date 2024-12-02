@@ -10,15 +10,32 @@
   <header>
     <h1>Simulador de Impacto Ambiental</h1>
     <p>Explora cómo tus decisiones afectan al medio ambiente</p>
+    <ul> <a href="pagina_de_inicio.html">Inicio</ul><a/>
   </header>
 
   <main>
     <!-- Sección de selección de categoría -->
     <section id="categories">
       <h2>Selecciona una categoría:</h2>
-      <button class="choice-btn" onclick="startSimulation('transporte')">Transporte</button>
-      <button class="choice-btn" onclick="startSimulation('alimentacion')">Alimentación</button>
-      <button class="choice-btn" onclick="startSimulation('residuos')">Residuos</button>
+      <div class="category-container">
+        <!-- Botón y imagen de Transporte -->
+        <div class="category-item">
+          <button class="choice-btn" onclick="startSimulation('transporte')">Transporte</button>
+          <img src="imagenes/transporte.jpg" alt="Transporte" class="category-image">
+        </div>
+
+        <!-- Botón y imagen de Alimentación -->
+        <div class="category-item">
+          <button class="choice-btn" onclick="startSimulation('alimentacion')">Alimentación</button>
+          <img src="imagenes/Alimentacion.jpg" alt="Alimentación" class="category-image">
+        </div>
+
+        <!-- Botón y imagen de Residuos -->
+        <div class="category-item">
+          <button class="choice-btn" onclick="startSimulation('residuos')">Residuos</button>
+          <img src="imagenes/Residuos.jpg" alt="Residuos" class="category-image">
+        </div>
+      </div>
     </section>
 
     <!-- Sección de simulación -->
@@ -32,11 +49,11 @@
     <!-- Sección de resultados -->
     <section id="results" class="hidden">
         <h2>Resultados</h2>
-        <canvas id="impactChart" width="400" height="200"></canvas>
+        
         <div id="recommendations"></div>
         <button onclick="restartSimulation()" class="restart">Reiniciar</button>
       </section>
-      
+  </main>
 
   <footer>
     <p>&copy; 2024 Simulador de Impacto Ambiental</p>
