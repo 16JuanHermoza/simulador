@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulador de Impacto Ambiental</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Simulador de Impacto Ambiental</h1>
+    <p>Explora cómo tus decisiones afectan al medio ambiente</p>
+  </header>
+
+  <main>
+    <!-- Sección de selección de categoría -->
+    <section id="categories">
+      <h2>Selecciona una categoría:</h2>
+      <button class="choice-btn" onclick="startSimulation('transporte')">Transporte</button>
+      <button class="choice-btn" onclick="startSimulation('alimentacion')">Alimentación</button>
+      <button class="choice-btn" onclick="startSimulation('residuos')">Residuos</button>
+    </section>
+
+    <!-- Sección de simulación -->
+    <section id="simulation" class="hidden">
+      <h2>Simulador</h2>
+      <p id="question"></p>
+      <div id="options"></div>
+      <button id="next-btn" class="hidden" onclick="nextQuestion()">Siguiente</button>
+    </section>
+
+    <!-- Sección de resultados -->
+    <section id="results" class="hidden">
+        <h2>Resultados</h2>
+        <canvas id="impactChart" width="400" height="200"></canvas>
+        <div id="recommendations"></div>
+        <button onclick="restartSimulation()" class="restart">Reiniciar</button>
+      </section>
+      
+
+  <footer>
+    <p>&copy; 2024 Simulador de Impacto Ambiental</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
