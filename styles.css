@@ -1,9 +1,11 @@
-body {
+html, body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
   background-color: #eef5f3;
   color: #333;
+  height: 100%; 
+  display: flex;
   flex-direction: column;
 }
 
@@ -15,14 +17,24 @@ header {
 }
 
 main {
-  flex: 1;
+  flex: 1; 
+  padding: 20px;
+}
+
+footer {
+  text-align: center;
+  padding: 10px;
+  background-color: #333;
+  color: white;
+  width: 100%;
+  margin-top: auto; 
 }
 
 .hidden {
   display: none;
 }
 
-.choice-btn,.restart,#next-btn,.btn_login {
+.choice-btn, .restart, #next-btn {
   display: inline-block;
   margin: 10px;
   padding: 10px 20px;
@@ -35,17 +47,6 @@ main {
   transition: background-color 0.3s;
 }
 
-.choice-btn,.restart,#next-btn:hover,.btn_login {
+.choice-btn:hover, .restart:hover, #next-btn:hover{
   background-color: #45a049;
-}
-
-footer {
-  text-align: center;
-  padding: 10px;
-  background-color: #333;
-  color: white;
-  width: 100%;
-}
-.login{
-  padding-left: 86%;
 }

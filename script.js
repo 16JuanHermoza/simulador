@@ -1,4 +1,3 @@
-// Simulador de Impacto Ambiental
 let currentCategory = null;
 let currentQuestionIndex = 0;
 let impactScore = 0;
@@ -67,7 +66,7 @@ function showQuestion() {
   const optionsDiv = document.getElementById("options");
   optionsDiv.innerHTML = "";
 
-  currentQuestion.options.forEach((option) => {
+  currentQuestion.options.forEach((option, index) => {
     const button = document.createElement("button");
     button.innerText = option.text;
     button.classList.add("choice-btn");
@@ -92,50 +91,61 @@ function nextQuestion() {
     showQuestion();
   } else {
     categoryScores[currentCategory] = impactScore;
-    showResults();
+    document.getElementById("simulation").classList.add("hidden");
+    document.getElementById("results").classList.remove("hidden");
+    renderResults();
   }
 }
 
-// Muestra los resultados finales como texto
-function showResults() {
-  document.getElementById("simulation").classList.add("hidden");
-  document.getElementById("results").classList.remove("hidden");
-
+// Muestra los resultados finales
+function renderResults() {
   const totalImpact =
     categoryScores.transporte +
     categoryScores.alimentacion +
     categoryScores.residuos;
 
-  let summary = `Tu impacto ambiental total es de ${totalImpact} puntos.`;
-  if (totalImpact < 15) {
-    summary += " ¡Excelente! Tus hábitos son muy sostenibles.";
-  } else if (totalImpact < 30) {
-    summary +=
-      " Tienes buenos hábitos, pero hay margen para reducir aún más tu impacto.";
-  } else {
-    summary +=
-      " Tu impacto es alto. Considera cambiar algunos hábitos para cuidar el planeta.";
-  }
+  const summary = `Tu impacto ambiental total es de ${totalImpact} puntos.`;
+  document.getElementById("recommendations").innerText = summary;
 
-  let recommendations = "";
-  if (categoryScores.transporte > 10) {
-    recommendations += " - Usa más transporte público o medios no motorizados.\n";
-  }
-  if (categoryScores.alimentacion > 8) {
-    recommendations += " - Reduce el consumo de carne roja.\n";
-  }
-  if (categoryScores.residuos > 5) {
-    recommendations += " - Intenta reciclar más y compostar residuos orgánicos.\n";
-  }
+  // Agrega el gráfico
+  renderChart();
+}
 
-  document.getElementById("results-summary").innerText = summary;
-  document.getElementById(
-    "results-recommendations"
-  ).innerText = recommendations || "¡Sigue así, estás haciendo un gran trabajo!";
+// Genera un gráfico usando Chart.js
+function renderChart() {
+  const ctx = document.getElementById("impactChart").getContext("2d");
+  new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: ["Transporte", "Alimentación", "Residuos"],
+      datasets: [
+        {
+          label: "Puntaje por categoría",
+          data: [
+            categoryScores.transporte,
+            categoryScores.alimentacion,
+            categoryScores.residuos
+          ],
+          backgroundColor: ["#4caf50", "#ff9800", "#f44336"]
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
 }
 
 // Reinicia la simulación
 function restartSimulation() {
   document.getElementById("results").classList.add("hidden");
   document.getElementById("categories").classList.remove("hidden");
+
+  // Reinicia los puntajes
+  categoryScores = { transporte: 0, alimentacion: 0, residuos: 0 };
 }
